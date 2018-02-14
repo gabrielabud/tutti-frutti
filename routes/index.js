@@ -35,7 +35,7 @@ router.get('/login',
 router.get('/login/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    res.render('profile', { user: req.user });
+    res.redirect('/')
   });
 
 router.get('/profile',
