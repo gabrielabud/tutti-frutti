@@ -59,7 +59,7 @@ rp(options)
         var productPrices = res('.tailor-made-product-price-box').toArray();
         let fruits = [];
         for(let i = 0; i < productNames.length; i++) {
-          let name = productNames[i].children[0].data;
+          let name = productNames[i].children[0].data.trim();
           let price = productPrices[i].children[0].data.trim()
           fruits.push({
             name: name,
