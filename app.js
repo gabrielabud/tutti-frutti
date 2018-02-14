@@ -55,17 +55,20 @@ const options = {
 
 rp(options)
     .then((res) => {
-        var nodes = res('.tailor-made-product-name').toArray();
-        for ( let elem of nodes) {
-          console.log(elem.children[0].data)
+        var productNames = res('.tailor-made-product-name').toArray();
+        var productPrices = res('.tailor-made-product-price-box').toArray();
+        let fruits = [];
+        for(let i = 0; i < productNames.length; i++) {
+          let name = productNames[i].children[0].data;
+          let price = productPrices[i].children[0].data.trim()
+          fruits.push({
+            name: name,
+            price: price
+          })
         }
-
-       
-
-       
+        console.log(JSON.stringify(fruits))
     })
     .catch((err) => {
-        console.log('LOGGING THE ERR')
         console.log(err)
     })
 
