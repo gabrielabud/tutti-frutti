@@ -2,9 +2,12 @@ var express = require('express');
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
+var router = express.Router();
+
 var scraper = express();
 
-scraper.get('/scrape' , function(req,res){
+router.get('/' , function(req,res, next){
+    res.render('scrape', { title: 'Express' });
 
     url = 'http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/bananas-30/';
 
@@ -15,13 +18,19 @@ scraper.get('/scrape' , function(req,res){
 
             var name = tailor-made-product-name
             var json = { name: "" };
+
+            $('.tailor-made-product-name').filter( function(){
+
+                var data = $(this);
+                
+            })
         }
 
     })
 
 })
 
-scraper.listen('3001')
+// router.listen('3000')
 console.log('lets get scraping');
 
-exports = module.exports = scraper;
+exports = module.exports = router;
