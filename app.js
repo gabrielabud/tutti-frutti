@@ -44,8 +44,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
 module.exports = app;
