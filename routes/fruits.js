@@ -9,12 +9,13 @@ const options = {
   }
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     let fruits = [];
     rp(options)
-        .then((res) => {
-            var productNames = res('.tailor-made-product-name').toArray();
-            var productPrices = res('.tailor-made-product-price-box').toArray();
+        .then(($) => {
+            console.log('HERE!!!!')
+            var productNames = $('.tailor-made-product-name').toArray();
+            var productPrices = $('.tailor-made-product-price-box').toArray();
             for(let i = 0; i < productNames.length; i++) {
                 let name = productNames[i].children[0].data.trim();
                 let price = productPrices[i].children[0].data.trim()
@@ -23,9 +24,8 @@ router.get('/', (req, res, next) => {
                     price: price
                 })
             }
+            res.send({ "products": JSON.parse(JSON.stringify(fruits)) })
         })
-        console.log(fruits)
-        res.send(JSON.stringify(fruits))
         .catch((err) => {
             console.log(err)
         })
