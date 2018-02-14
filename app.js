@@ -55,12 +55,19 @@ const options = {
 
 rp(options)
     .then((res) => {
-        console.log('Welcome sun')
-        console.log(res.html())
+        var nodes = res('.tailor-made-product-name').toArray();
+        for ( let elem of nodes) {
+          console.log(elem.children[0].data)
+        }
+
+       
+
+       
     })
     .catch((err) => {
         console.log('LOGGING THE ERR')
         console.log(err)
     })
+
 
 module.exports = app;
