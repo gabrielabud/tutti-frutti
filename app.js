@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var fruits = require ('./routes/fruits');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/fruits', fruits)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,34 +44,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-const rp = require('request-promise');
-const cheerio = require('cheerio');
-const options = {
-  uri: 'http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/apples-pears-29/',
-  transform: function(body) {
-    return cheerio.load(body);
-  }
-}
-
-rp(options)
-    .then((res) => {
-        var productNames = res('.tailor-made-product-name').toArray();
-        var productPrices = res('.tailor-made-product-price-box').toArray();
-        let fruits = [];
-        for(let i = 0; i < productNames.length; i++) {
-          let name = productNames[i].children[0].data.trim();
-          let price = productPrices[i].children[0].data.trim()
-          fruits.push({
-            name: name,
-            price: price
-          })
-        }
-        console.log(JSON.stringify(fruits))
-    })
-    .catch((err) => {
-        console.log(err)
-    })
 
 module.exports = app;
