@@ -55,8 +55,8 @@ const options = {
 
 rp(options)
     .then((res) => {
-        console.log('LOGGING THE DOLLAR')
-        console.log(res)
+        console.log('Welcome sun')
+        console.log(res.html())
     })
     .catch((err) => {
         console.log('LOGGING THE ERR')
