@@ -6,7 +6,7 @@ var Strategy = require('passport-github').Strategy;
 passport.use(new Strategy({
   clientID: '34d574d9a65207669a2d',
   clientSecret: '328ac42f39870ee8495ce43f2c99beeb329112d8',
-  callbackURL: 'http://localhost:3000/login/callback'
+  callbackURL: 'https://jigsaw-tutti.herokuapp.com/login/callback'
 },
 function(accessToken, refreshToken, profile, cb) {
   return cb(null, profile);
