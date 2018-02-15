@@ -1,43 +1,34 @@
 var express = require('express');
-var axios = require('axios');
 var router = express.Router();
-let Fruit = require('../models/fruits.js');
-var mongoose = require('mongoose');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 const options = {
-    uri: 'http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/apples-pears-29/',
-    transform: function (body) {
-        return cheerio.load(body);
-    }
+  uri: 'http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/apples-pears-29/',
+  transform: function(body) {
+    return cheerio.load(body);
+  }
 }
 
-
-
-router.get('/new', (req, res) => {
+router.get('/', (req, res) => {
     let fruits = [];
     rp(options)
         .then(($) => {
             console.log('HERE!!!!')
             var productNames = $('.tailor-made-product-name').toArray();
             var productPrices = $('.tailor-made-product-price-box').toArray();
-            for (let i = 0; i < productNames.length; i++) {
+            for(let i = 0; i < productNames.length; i++) {
                 let name = productNames[i].children[0].data.trim();
-                let price = Number(productPrices[i].children[0].data.trim().replace(/£/,""));
-                var fruit = new Fruit({
+                let price = productPrices[i].children[0].data.trim()
+                fruits.push({
                     name: name,
                     price: price
                 })
-                fruit.save(function(err) {
-                    if(err) throw err;
-                });
             }
-            res.send();
+            res.send({ "products": JSON.parse(JSON.stringify(fruits)) })
         })
         .catch((err) => {
             console.log(err)
         })
 })
-
 
 module.exports = router;
