@@ -13,7 +13,7 @@ var fruits = require ('./routes/fruits');
 
 var app = express();
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/tutti-frutti');
+mongoose.connect(process.env.MONGOLOAB_URI || 'mongodb://localhost/tutti-frutti');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
