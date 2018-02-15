@@ -12,8 +12,6 @@ const options = {
     }
 }
 
-
-
 router.get('/new', (req, res) => {
     let fruits = [];
     rp(options)
@@ -36,12 +34,11 @@ router.get('/new', (req, res) => {
                     }
                 })        
             }
-            res.send();
+            res.send('Save successful');
         })
         .catch((err) => {
             console.log(err)
         })
 })
-
 
 module.exports = router;
