@@ -11,6 +11,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var fruits = require ('./routes/fruits');
 
+require('dotenv').config();
+
 var app = express();
 
 mongoose.connect(process.env.MONGOLOAB_URI || 'mongodb://localhost/tutti-frutti');

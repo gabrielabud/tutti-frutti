@@ -30,6 +30,7 @@
   "devDependencies": {
     "axios": "^0.17.1",
     "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^5.0.0",
     "nodemon": "^1.14.12",
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
