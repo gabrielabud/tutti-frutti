@@ -35,8 +35,12 @@ router.get('/login',
 router.get('/login/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/')
+    res.redirect('/admin')
   });
+
+router.get('/admin', function(req, res){
+  res.render('admin')
+})
 
 router.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),

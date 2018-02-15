@@ -12,7 +12,7 @@ const options = {
     }
 }
 
-router.get('/new', (req, res) => {
+router.post('/new', (req, res) => {
     let fruits = [];
     rp(options)
         .then(($) => {
