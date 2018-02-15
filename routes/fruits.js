@@ -24,13 +24,17 @@ router.get('/new', (req, res) => {
             for (let i = 0; i < productNames.length; i++) {
                 let name = productNames[i].children[0].data.trim();
                 let price = Number(productPrices[i].children[0].data.trim().replace(/£/,""));
-                var fruit = new Fruit({
-                    name: name,
-                    price: price
-                })
-                fruit.save(function(err) {
-                    if(err) throw err;
-                });
+                Fruit.find({name: name}, function(err, fruitList){
+                    if (fruitList[0] === undefined) {
+                        var fruit = new Fruit({
+                            name: name,
+                            price: price
+                        })
+                        fruit.save(function (err) {
+                            if (err) throw err;
+                        });  
+                    }
+                })        
             }
             res.send();
         })
