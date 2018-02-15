@@ -1,9 +1,17 @@
 {
   "name": "tutti-frutti",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
+  },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
+  "engines": {
+    "node": "8.9.4",
+    "npm": "5.6.0"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
