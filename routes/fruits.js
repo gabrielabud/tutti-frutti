@@ -41,4 +41,11 @@ router.get('/new', (req, res) => {
         })
 })
 
+router.get('/', (req, res) => {
+    Fruit.find({}, (err, fruitList) => {
+        if (err) throw err;
+        res.status(200).send(fruitList)
+    })
+})
+
 module.exports = router;
