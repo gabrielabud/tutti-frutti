@@ -1,5 +1,4 @@
 var express = require('express');
-var axios = require('axios');
 var router = express.Router();
 let Fruit = require('../models/fruits.js');
 var mongoose = require('mongoose');
