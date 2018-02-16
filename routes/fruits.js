@@ -46,7 +46,6 @@ router.post('/new', (req, res) => {
                 console.log(err)
             })
     })
-
 })
 
 router.get('/', (req, res) => {
