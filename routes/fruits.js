@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
-let Fruit = require('../models/fruits.js');
 var mongoose = require('mongoose');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
+
+const Fruit = require('../models/fruits.js');
+const saveNewFruit = require('../controllers/fruits');
+
 
 router.post('/new', (req, res) => {
     let fruits = [];
@@ -26,17 +29,7 @@ router.post('/new', (req, res) => {
                 productNames.forEach((item, i) => {
                     let itemName  = item.children[0].data.trim();
                     let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
-                    Fruit.find({ name: itemName }, (err, searchResults) => {
-                        if (!searchResults.length) {
-                            var fruit = new Fruit({
-                                name: itemName,
-                                price: itemPrice
-                            })
-                            fruit.save((err) => {
-                                if (err) throw err;
-                            });  
-                        }
-                    })        
+                    saveNewFruit(itemName, itemPrice);
                 })
                 if (index === urisToScrape.length - 1) {
                     res.status(200).send('Save successful');
