@@ -21,23 +21,23 @@ router.post('/new', (req, res) => {
         }
         rp(options)
             .then(($) => {
-                var productNames = $('.tailor-made-product-name').toArray();
+                var productNames  = $('.tailor-made-product-name').toArray();
                 var productPrices = $('.tailor-made-product-price-box').toArray();
-                for (let i = 0; i < productNames.length; i++) {
-                    let name = productNames[i].children[0].data.trim();
-                    let price = Number(productPrices[i].children[0].data.trim().replace(/£/,""));
-                    Fruit.find({ name: name }, (err, fruitList) => {
-                        if (fruitList[0] === undefined) {
+                productNames.forEach((item, i) => {
+                    let itemName  = item.children[0].data.trim();
+                    let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
+                    Fruit.find({ name: itemName }, (err, searchResults) => {
+                        if (!searchResults.length) {
                             var fruit = new Fruit({
-                                name: name,
-                                price: price
+                                name: itemName,
+                                price: itemPrice
                             })
                             fruit.save((err) => {
                                 if (err) throw err;
                             });  
                         }
                     })        
-                }
+                })
                 if (index === urisToScrape.length - 1) {
                     res.status(200).send('Save successful');
                 }
@@ -49,9 +49,9 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    Fruit.find({}, (err, fruitList) => {
+    Fruit.find({}, (err, searchResults) => {
         if (err) throw err;
-        res.status(200).send(fruitList)
+        res.status(200).send(searchResults)
     })
 })
 
