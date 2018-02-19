@@ -1,7 +1,7 @@
 // To extract out Router logic
-const rp = require('request-promise');
-const cheerio = require('cheerio');
-const saveNewFruit = require('./fruits')
+const rp            = require('request-promise');
+const cheerio       = require('cheerio');
+const saveNewFruit  = require('./fruits')
 
 const scrape = (uri) => {
   let options = {
@@ -21,7 +21,7 @@ const scrape = (uri) => {
       })
     })
     .catch((err) => {
-        console.log(err)
+      console.log(err)
     })
 }
 
