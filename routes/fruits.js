@@ -3,9 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 const rp = require('request-promise');
 const cheerio = require('cheerio');
-
-const Fruit = require('../models/fruits.js');
-const scrape = require('../controllers/fruits');
+const scrape = require('../controllers/scrapers');
 
 
 router.post('/new', (req, res) => {
