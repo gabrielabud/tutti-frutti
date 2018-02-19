@@ -1,6 +1,7 @@
 var express  = require('express');
 var router   = express.Router();
 const scrape = require('../controllers/scrapers');
+const Fruit  = require('../models/fruits');
 
 router.post('/new', (req, res) => {
   let urisToScrape = [
