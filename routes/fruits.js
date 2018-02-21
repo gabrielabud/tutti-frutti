@@ -16,7 +16,7 @@ router.post('/new', (req, res) => {
 router.get('/', (req, res) => {
   Fruit.find({}, (err, searchResults) => {
     if (err) throw err;
-      res.status(200).send(searchResults)
+    res.status(200).send(searchResults)
     })
 })
 

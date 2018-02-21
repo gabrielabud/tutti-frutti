@@ -16,6 +16,7 @@ const scrape = (uri) => {
       var productPrices = $('.tailor-made-product-price-box').toArray();
       productNames.forEach((item, i) => {
         let itemName  = item.children[0].data.trim();
+        if (itemName === 'Cox [English]') itemName = 'Cox - English';
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
         saveNewFruit(itemName, itemPrice);
       })
