@@ -1,11 +1,11 @@
 // To extract out Router logic
 const rp            = require('request-promise');
 const cheerio       = require('cheerio');
-const saveNewFruit  = require('./fruits')
+const saveFruit  = require('./fruits')
 
-const scrape = (uri) => {
+const scrapePage = (pageCategory, pageUri) => {
   let options = {
-    uri: uri,
+    uri: pageUri,
     transform: (body) => {
       return cheerio.load(body);
     }
@@ -16,9 +16,8 @@ const scrape = (uri) => {
       var productPrices = $('.tailor-made-product-price-box').toArray();
       productNames.forEach((item, i) => {
         let itemName  = item.children[0].data.trim();
-        if (itemName === 'Cox [English]') itemName = 'Cox - English';
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
-        saveNewFruit(itemName, itemPrice);
+        saveFruit(pageCategory, itemName, itemPrice);
       })
     })
     .catch((err) => {
@@ -26,4 +25,4 @@ const scrape = (uri) => {
     })
 }
 
-module.exports = scrape;
+module.exports = scrapePage;

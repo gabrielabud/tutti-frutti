@@ -1,15 +1,24 @@
-var express  = require('express');
-var router   = express.Router();
-const scrape = require('../controllers/scrapers');
-const Fruit  = require('../models/fruits');
+var express       = require('express');
+var router        = express.Router();
+const scrapePage  = require('../controllers/scrapers');
+const Fruit       = require('../models/fruits');
 
 router.post('/new', (req, res) => {
-  let urisToScrape = [
-    "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/apples-pears-29/",
-    "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/bananas-30/",
-    "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/citrus-fruits-40/"
+  let productPages = [
+    // {
+    //   category : "Apples and Pears",
+    //   uri      : "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/apples-pears-29/"
+    // },
+    // {
+    //   category : "Bananas",
+    //   uri      : "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/bananas-30/"
+    // },
+    {
+      category : "Citrus Fruits",
+      uri      : "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/citrus-fruits-40/"
+    }
   ]
-  urisToScrape.forEach((uri) => scrape(uri));
+  productPages.forEach((page) => scrapePage(page.category, page.uri));
   res.status(200).send('Save successful')
 })
 

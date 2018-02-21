@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema   = mongoose.Schema;
 
-var fruitsSchema = new Schema({
-    name: String,
-    price: Number
+let fruitsSchema = new Schema({
+    name:       String,
+    price:      Number,
+    categoryId: String
 });
 
 module.exports = mongoose.model('fruits', fruitsSchema)
