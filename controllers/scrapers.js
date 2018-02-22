@@ -21,15 +21,6 @@ const scrapePage = (page) => {
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
         await saveFruit(itemName, itemPrice, page.category)
       })
-
-      // productNames.forEach((item, i) => {
-      //   let itemName  = item.children[0].data.trim();
-      //   let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
-      //   console.log('SAVING...');
-      //   (async () => {
-      //     await saveFruit(pageCategory, itemName, itemPrice);
-      //   })();
-      // });
     })
     .catch((err) => {
       console.log(err)
