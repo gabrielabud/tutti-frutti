@@ -1,22 +1,28 @@
 const Fruit    = require('../models/fruits');
 
-async function saveFruit(name, price, categoryId) {
+async function saveOrUpdateFruit(name, price, categoryId) {
   name = cleanUpName(name);
   let existingFruit = await Fruit.find({ name: name });
-  let fruit;
   if (existingFruit.length) {
-    fruit            = existingFruit[0];
-    fruit.price      = price;
-    fruit.categoryId = categoryId;
-    await fruit.save();
+    await updateFruit(existingFruit[0], price, categoryId);
   } else {
-    fruit = new Fruit({
-      name: name,
-      price: price,
-      categoryId: categoryId
-    })
-    await fruit.save();
+    await saveNewFruit(name, price, categoryId);
   }
+}
+
+async function saveNewFruit(name, price, categoryId) {
+  let fruit = new Fruit({
+    name: name,
+    price: price,
+    categoryId: categoryId
+  })
+  await fruit.save();
+}
+
+async function updateFruit(fruitObject, newPrice, newCategoryId) {
+  fruitObject.price      = newPrice;
+  fruitObject.categoryId = newCategoryId;
+  await fruitObject.save();
 }
 
 let cleanUpName = (fruitName) => {
@@ -26,4 +32,4 @@ let cleanUpName = (fruitName) => {
   return fruitName;
 }
 
-module.exports = saveFruit;
+module.exports = saveOrUpdateFruit;

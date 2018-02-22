@@ -12,9 +12,9 @@ router.post('/new', (req, res) => {
     await CategoryMethods.findOrCreateCategory(page.category);
     let categoryId = await CategoryMethods.getCategoryId(page.category);
     await scrapePage(page, categoryId);
-  })
-  res.status(200).send('Save successful')
-})
+  });
+  res.status(200).send('Save successful');
+});
 
 router.get('/', (req, res) => {
   (async() => {

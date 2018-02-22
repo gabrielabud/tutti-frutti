@@ -1,7 +1,7 @@
 const rp        = require('request-promise');
 const Promise   = require('bluebird');
 const cheerio   = require('cheerio');
-const saveFruit = require('./fruits');
+const saveOrUpdateFruit = require('./fruits');
 
 const scrapePage = (page, categoryId) => {
   let options = {
@@ -17,7 +17,7 @@ const scrapePage = (page, categoryId) => {
       return Promise.map(productNames, async (item, i) => {
         let itemName  = item.children[0].data.trim();
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
-        await saveFruit(itemName, itemPrice, categoryId)
+        await saveOrUpdateFruit(itemName, itemPrice, categoryId)
       })
     })
     .catch((err) => {
