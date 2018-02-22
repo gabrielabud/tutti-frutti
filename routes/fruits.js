@@ -19,12 +19,16 @@ router.post('/new', (req, res) => {
 router.get('/', (req, res) => {
   (async() => {
     let response = {};
-    Promise.map(productPages, async page => {
-      let categoryId          = await CategoryMethods.getCategoryId(page.category);
-      let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
-      response[page.category] = fruitsInCategory;
-    })
-    res.send(response);
+    try {
+      await Promise.map(productPages, async page => {
+        let categoryId          = await CategoryMethods.getCategoryId(page.category);
+        let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
+        response[page.category] = fruitsInCategory;
+      })
+      res.send(response);
+    } catch(e) {
+      throw e;
+    }
   })();
 })
 
