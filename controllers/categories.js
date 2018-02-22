@@ -1,20 +1,12 @@
 const Category = require('../models/categories');
 
-async function findCategory(categoryName) {
-  let categories = await Category.find({ name: categoryName }, (err, results) => {
-    if (err) throw err;
-    return results;
-  })
-  return categories;
-}
-
-async function saveCategory(categoryName) {
-  let categoryFound = await findCategory(categoryName);
-  console.log(1, categoryFound)
+async function findOrCreateCategory(categoryName) {
+  let categoryFound = await Category.find({ name: categoryName })
+  console.log('FOUND CATEGORY', categoryFound)
   if (categoryFound.length) return categoryFound[0];
   let category = new Category({ name: categoryName });
   await category.save();
-  console.log(2, category)
+  console.log('SAVED NEW CATEGORY', category)
   return category;
 
 
@@ -32,4 +24,4 @@ async function saveCategory(categoryName) {
   // }
 }
 
-module.exports = saveCategory;
+module.exports = findOrCreateCategory;

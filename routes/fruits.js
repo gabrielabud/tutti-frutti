@@ -18,14 +18,14 @@ router.post('/new', (req, res) => {
       uri      : "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/citrus-fruits-40/"
     }
   ]
-  productPages.forEach((page) => scrapePage(page.category, page.uri));
+  productPages.forEach(page => scrapePage(page.category, page.uri));
   res.status(200).send('Save successful')
 })
 
 router.get('/', (req, res) => {
   Fruit.find({}, (err, searchResults) => {
     if (err) throw err;
-    res.status(200).send(searchResults)
+      res.status(200).send(searchResults)
     })
 })
 

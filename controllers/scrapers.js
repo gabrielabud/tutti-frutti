@@ -18,7 +18,7 @@ async function scrapePage(pageCategory, pageUri) {
         let itemName  = item.children[0].data.trim();
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
         console.log('SAVING...')
-        await saveFruit(pageCategory, itemName, itemPrice);
+        saveFruit(pageCategory, itemName, itemPrice);
       })
     })
     .catch((err) => {
