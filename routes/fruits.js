@@ -3,6 +3,7 @@ var router        = express.Router();
 const Promise   = require('bluebird');
 const scrapePage  = require('../controllers/scrapers');
 const Fruit       = require('../models/fruits');
+const Category       = require('../models/categories');
 const findOrCreateCategory = require('../controllers/categories');
 
 router.post('/new', (req, res) => {
@@ -23,7 +24,9 @@ router.post('/new', (req, res) => {
 
   Promise.map(productPages, async page => {
     await findOrCreateCategory(page.category);
-    await scrapePage(page);
+    let categories = await Category.find({ name: page.category });
+    let categoryId   = categories[0]._id;
+    await scrapePage(page, categoryId);
   })
 
   res.status(200).send('Save successful')
