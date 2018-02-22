@@ -1,9 +1,9 @@
 // To extract out Router logic
-const rp            = require('request-promise');
-const cheerio       = require('cheerio');
-const saveFruit  = require('./fruits')
+const rp        = require('request-promise');
+const cheerio   = require('cheerio');
+const saveFruit = require('./fruits')
 
-const scrapePage = (pageCategory, pageUri) => {
+async function scrapePage(pageCategory, pageUri) {
   let options = {
     uri: pageUri,
     transform: (body) => {
@@ -17,7 +17,8 @@ const scrapePage = (pageCategory, pageUri) => {
       productNames.forEach((item, i) => {
         let itemName  = item.children[0].data.trim();
         let itemPrice = productPrices[i].children[0].data.trim().replace(/£/, '');
-        saveFruit(pageCategory, itemName, itemPrice);
+        console.log('SAVING...')
+        await saveFruit(pageCategory, itemName, itemPrice);
       })
     })
     .catch((err) => {
