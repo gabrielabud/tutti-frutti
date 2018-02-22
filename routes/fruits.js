@@ -1,10 +1,10 @@
-var express       = require('express');
-var router        = express.Router();
-const Promise   = require('bluebird');
-const scrapePage  = require('../controllers/scrapers');
-const Fruit       = require('../models/fruits');
-const Category       = require('../models/categories');
-const findOrCreateCategory = require('../controllers/categories');
+var express           = require('express');
+var router            = express.Router();
+const Promise         = require('bluebird');
+const scrapePage      = require('../controllers/scrapers');
+const Fruit           = require('../models/fruits');
+const Category        = require('../models/categories');
+const CategoryMethods = require('../controllers/categories');
 
 router.post('/new', (req, res) => {
   let productPages = [
@@ -23,9 +23,8 @@ router.post('/new', (req, res) => {
   ]
 
   Promise.map(productPages, async page => {
-    await findOrCreateCategory(page.category);
-    let categories = await Category.find({ name: page.category });
-    let categoryId   = categories[0]._id;
+    await CategoryMethods.findOrCreateCategory(page.category);
+    let categoryId = await CategoryMethods.getCategoryId(page.category);
     await scrapePage(page, categoryId);
   })
 

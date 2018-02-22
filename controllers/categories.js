@@ -12,4 +12,16 @@ async function findOrCreateCategory(categoryName) {
   }
 }
 
-module.exports = findOrCreateCategory;
+async function getCategoryId(categoryName) {
+  let categories = await Category.find({ name: categoryName });
+  if (categories.length) {
+    return categories[0]._id
+  } else {
+    throw(`Error: ${categoryName} not found`)
+  }
+}
+
+module.exports = {
+  findOrCreateCategory,
+  getCategoryId
+}
