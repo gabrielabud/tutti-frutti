@@ -1,7 +1,9 @@
 var express       = require('express');
 var router        = express.Router();
+const Promise   = require('bluebird');
 const scrapePage  = require('../controllers/scrapers');
 const Fruit       = require('../models/fruits');
+const findOrCreateCategory = require('../controllers/categories');
 
 router.post('/new', (req, res) => {
   let productPages = [
@@ -18,7 +20,12 @@ router.post('/new', (req, res) => {
       uri      : "http://www.fruitfortheoffice.co.uk/tailormade-24/fruit-bowl-44/citrus-fruits-40/"
     }
   ]
-  productPages.forEach(page => scrapePage(page.category, page.uri));
+
+  return Promise.map(productPages, async page => {
+    await findOrCreateCategory(page.category);
+    await scrapePage(page);
+  })
+
   res.status(200).send('Save successful')
 })
 

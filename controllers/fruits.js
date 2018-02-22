@@ -2,8 +2,9 @@ const Fruit    = require('../models/fruits');
 const Category = require('../models/categories');
 const findOrCreateCategory = require('./categories')
 
-async function saveFruit(categoryName, name, price) {
-  let category      = await findOrCreateCategory(categoryName);
+async function saveFruit(name, price, categoryName) {
+  let categories = await Category.find({ name: categoryName });
+  let category   = categories[0];
   console.log('CATEGORY:', category)
   let existingFruit = await Fruit.find({ name: name });
   let fruit;
