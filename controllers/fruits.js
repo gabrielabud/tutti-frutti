@@ -20,8 +20,9 @@ async function saveFruit(name, price, categoryId) {
 }
 
 let cleanUpName = (fruitName) => {
-  let invalidChars = ['[', ']', '(', ')'];
-  invalidChars.forEach(char => fruitName = fruitName.replace(char, ''));
+  fruitName = fruitName.replace('  ', ' ');
+  ['[', '(', '{'].forEach(char => fruitName = fruitName.replace(char, '- '));
+  [']', ')', '}'].forEach(char => fruitName = fruitName.replace(char, ''));
   return fruitName;
 }
 
