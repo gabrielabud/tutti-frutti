@@ -1,9 +1,7 @@
-// To extract out Router logic
 const rp        = require('request-promise');
 const Promise   = require('bluebird');
 const cheerio   = require('cheerio');
 const saveFruit = require('./fruits');
-const findOrCreateCategory = require('./categories');
 
 const scrapePage = (page, categoryId) => {
   let options = {

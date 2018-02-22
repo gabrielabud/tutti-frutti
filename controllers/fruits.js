@@ -1,9 +1,6 @@
 const Fruit    = require('../models/fruits');
-const Category = require('../models/categories');
-const findOrCreateCategory = require('./categories')
 
 async function saveFruit(name, price, categoryId) {
-  console.log('CATEGORY ID', categoryId)
   let existingFruit = await Fruit.find({ name: name });
   let fruit;
   if (existingFruit.length) {
