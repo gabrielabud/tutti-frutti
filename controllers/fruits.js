@@ -1,6 +1,7 @@
 const Fruit    = require('../models/fruits');
 
 async function saveFruit(name, price, categoryId) {
+  name = cleanUpName(name);
   let existingFruit = await Fruit.find({ name: name });
   let fruit;
   if (existingFruit.length) {
@@ -16,7 +17,12 @@ async function saveFruit(name, price, categoryId) {
     })
     await fruit.save();
   }
+}
 
+let cleanUpName = (fruitName) => {
+  let invalidChars = ['[', ']', '(', ')'];
+  invalidChars.forEach(char => fruitName = fruitName.replace(char, ''));
+  return fruitName;
 }
 
 module.exports = saveFruit;
