@@ -13,15 +13,25 @@ router.post('/new', (req, res) => {
     let categoryId = await CategoryMethods.getCategoryId(page.category);
     await scrapePage(page, categoryId);
   })
-
   res.status(200).send('Save successful')
 })
 
 router.get('/', (req, res) => {
-  Fruit.find({}, (err, searchResults) => {
-    if (err) throw err;
-      res.status(200).send(searchResults)
+  (async() => {
+    let response = {};
+    await Promise.map(productPages, async page => {
+      let categoryId = await CategoryMethods.getCategoryId(page.category);
+      let fruitsInCategory = await Fruit.find({ categoryId: categoryId });
+      response[page.category] = fruitsInCategory;
     })
+    res.send(response);
+  })();
+
+  
+  // Fruit.find({}, (err, searchResults) => {
+  //   if (err) throw err;
+  //   res.status(200).send(searchResults)
+  // })
 })
 
 module.exports = router;
