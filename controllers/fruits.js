@@ -3,7 +3,21 @@ const Category = require('../models/categories');
 const findOrCreateCategory = require('./categories')
 
 async function saveFruit(categoryName, name, price) {
-  console.log('HERE', findOrCreateCategory(categoryName))
+  let category      = await findOrCreateCategory(categoryName);
+  let existingFruit = await Fruit.find({ name: name });
+  let fruit;
+  if (existingFruit.length) {
+    fruit = existingFruit[0];
+    fruit.price    = price;
+    fruit.categoryId = category._id;
+  } else {
+    fruit = new Fruit({
+      name: name,
+      price: price,
+      categoryId: category._id
+    })
+    await fruit.save();
+  }
 
 
     // try {
