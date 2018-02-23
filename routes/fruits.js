@@ -9,8 +9,8 @@ const productPages    = require('../data/pages');
 
 router.post('/new', (req, res) => {
   Promise.map(productPages, async page => {
-    await CategoryMethods.findOrCreateCategory(page.category);
-    let categoryId = await CategoryMethods.getCategoryId(page.category);
+    await CategoryMethods.findOrCreateCategory(page);
+    let categoryId = await CategoryMethods.getCategoryId(page.categoryKey);
     await scrapePage(page, categoryId);
   });
   res.status(200).send('Save successful');
@@ -21,9 +21,12 @@ router.get('/', (req, res) => {
     let response = {};
     try {
       await Promise.map(productPages, async page => {
-        let categoryId          = await CategoryMethods.getCategoryId(page.category);
+        let categoryId          = await CategoryMethods.getCategoryId(page.categoryKey);
         let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
-        response[page.category] = fruitsInCategory;
+        response[page.categoryKey] = {
+          name  : page.categoryName,
+          fruits: fruitsInCategory
+        }
       })
       res.send(response);
     } catch(e) {
