@@ -7,6 +7,15 @@ const Category        = require('../models/categories');
 const CategoryMethods = require('../controllers/categories');
 const productPages    = require('../data/pages');
 
+router.get('/', (req, res) => {
+  (async() => {
+    let response = {};
+    response.categories = await Category.find();
+    response.fruits     = await Fruit.find();
+    res.send(response);
+  })();
+})
+
 router.post('/new', (req, res) => {
   Promise.map(productPages, async page => {
     await CategoryMethods.findOrCreateCategory(page);
@@ -16,28 +25,11 @@ router.post('/new', (req, res) => {
   res.status(200).send('Save successful');
 });
 
-router.get('/', (req, res) => {
+router.post('/delete', (req, res) => {
   (async() => {
-    let response = {};
-    response.categories = await Category.find();
-    response.fruits     = await Fruit.find();
-    res.send(response);
-
-    // try {
-    //   await Promise.map(productPages, async page => {
-    //     let categoryId          = await CategoryMethods.getCategoryId(page.categoryKey);
-    //     let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
-    //     response[page.categoryKey] = {
-    //       name  : page.categoryName,
-    //       fruits: fruitsInCategory
-    //     }
-    //   })
-    //   res.send(response);
-    // } catch(e) {
-    //   throw e;
-    // }
-
-
+    await Category.remove({});
+    await Fruit.remove({});
+    res.send('Deleted All Records');
   })();
 })
 
