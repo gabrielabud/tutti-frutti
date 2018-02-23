@@ -19,19 +19,25 @@ router.post('/new', (req, res) => {
 router.get('/', (req, res) => {
   (async() => {
     let response = {};
-    try {
-      await Promise.map(productPages, async page => {
-        let categoryId          = await CategoryMethods.getCategoryId(page.categoryKey);
-        let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
-        response[page.categoryKey] = {
-          name  : page.categoryName,
-          fruits: fruitsInCategory
-        }
-      })
-      res.send(response);
-    } catch(e) {
-      throw e;
-    }
+    response.categories = await Category.find();
+    response.fruits     = await Fruit.find();
+    res.send(response);
+
+    // try {
+    //   await Promise.map(productPages, async page => {
+    //     let categoryId          = await CategoryMethods.getCategoryId(page.categoryKey);
+    //     let fruitsInCategory    = await Fruit.find({ categoryId: categoryId });
+    //     response[page.categoryKey] = {
+    //       name  : page.categoryName,
+    //       fruits: fruitsInCategory
+    //     }
+    //   })
+    //   res.send(response);
+    // } catch(e) {
+    //   throw e;
+    // }
+
+
   })();
 })
 
